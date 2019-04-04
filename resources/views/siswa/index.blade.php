@@ -85,6 +85,11 @@
 						    <label for="exampleInputEmail1">Nama Belakang</label>
 						    <input name='nama_belakang' type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama belakang">
 						  </div>
+
+						  <div class="form-group">
+						    <label for="exampleInputEmail1">Email</label>
+						    <input name='email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email">
+						  </div>
 						   <div class="form-group">
 						    <label for="exampleFormControlSelect1">Jenis Kelamin</label>
 						    <select name='jenis_kelamin' class="form-control" id="exampleFormControlSelect1">
@@ -190,6 +195,11 @@
 						  <div class="form-group">
 						    <label for="exampleInputEmail1">Nama Belakang</label>
 						    <input name='nama_belakang' type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama belakang">
+						  </div>
+
+						  <div class="form-group">
+						    <label for="exampleInputEmail1">Email</label>
+						    <input name='email' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email">
 						  </div>
 						   <div class="form-group">
 						    <label for="exampleFormControlSelect1">Jenis Kelamin</label>

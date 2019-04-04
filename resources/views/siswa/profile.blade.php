@@ -12,8 +12,10 @@
 								<div class="profile-header">
 									<div class="overlay"></div>
 									<div class="profile-main">
-										<img src="{{asset('images/'.$siswa->avatar)}}" class="img-circle" alt="Avatar">
-										<h3 class="name">{{$siswa->nama}}</h3>
+										<img src="{{asset('images/'.$siswa->avatar)}}" width="80px" height="80px" class="img-circle" alt="Avatar">
+										<h3 class="name">{{$siswa->nama_depan}}</h3>
+											<span class="">{{$siswa->nama}}</span>
+									
 										<span class="online-status status-available">Available</span>
 									</div>
 									<div class="profile-stat">
@@ -36,6 +38,8 @@
 									<div class="profile-info">
 										<h4 class="heading">Basic Info</h4>
 										<ul class="list-unstyled list-justify">
+											<li>Jenis_kelamin <span>{{$siswa->nama}}</span></li>
+											
 											<li>Jenis_kelamin <span>{{$siswa->jenis_kelamin}}</span></li>
 											<li>Agama<span>{{$siswa->agama}}</li>
 											<li>Email <span>{{Auth()->user()->email}}</span></li>

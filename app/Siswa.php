@@ -9,13 +9,13 @@ class Siswa extends Model
     //
     protected $table ='siswa';
 
-    protected $fillable = ['nama_depan','nama_belakang','jenis_kelamin','agama','alamat','avatar'];
+    protected $fillable = ['nama_depan','nama_belakang','jenis_kelamin','agama','alamat','avatar','user_id'];
 
-//   public function getAvatar()
-  //  {
-    //		if ($this->avatar) {
-    //			return asset('images/saya.jpg');
-    //		}
-    //		return asset('images/'.$this->avatar);
-    //}
+   public function getAvatar()
+    {
+    		if ($this->avatar) {
+    			return asset('images/saya.jpg');
+    		}
+    		return asset('images/'.$this->avatar);
+    }
 }
