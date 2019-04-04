@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				
-		      <form action="/siswa/{{$siswa->id}}/update" method="post">
+		      <form action="/siswa/{{$siswa->id}}/update" method="post" enctype="multipart/form-data">
 		      	{{csrf_field()}}
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Nama Depan</label>
@@ -34,11 +34,17 @@
 			    <label for="exampleInputEmail1">Agama</label>
 			    <input type="text" name='agama' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Agama" value="{{$siswa->agama}}">
 			  </div>
+
 			    <div class="mb-3">
 					<label for="validationTextarea">Alamat</label>
 					<textarea name='alamat' class="form-control " id="validationTextarea" placeholder="Alamat"  >{{$siswa->alamat}}</textarea>
 					
 				</div>
+
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Avatar</label>
+			    <input type="file" name='avatar' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Avatar" value="{{$siswa->avatar}}">
+			  </div>
 			  <div class="form-group form-check">
 			    <input type="checkbox" class="form-check-input" id="exampleCheck1">
 			    <label class="form-check-label" for="exampleCheck1">Check me out</label>
