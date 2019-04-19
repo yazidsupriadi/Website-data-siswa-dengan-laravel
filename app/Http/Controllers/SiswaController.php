@@ -21,6 +21,9 @@ class SiswaController extends Controller
 
    public  function create(Request $request)
     {	//insert siswa
+        $this->validate($request,[
+            'nama_depan' => 'min:5'
+        ]);
         $user = new \App\User;
         $user->role = 'siswa';
         $user->name = $request->nama_depan;
@@ -32,7 +35,12 @@ class SiswaController extends Controller
         //insert siswa
         $request->request->add(["user_id" => $user->id]);
         $siswa = \App\Siswa::create($request->all());
-        
+               if ($request->hasFile('avatar')) {
+            $request->file('avatar')->move(public_path('images/'),$request->file('avatar')->getClientOriginalName());
+            $siswa->avatar = $request->file('avatar')->getClientOriginalName();
+            $siswa->save();
+            
+        }       
     	return redirect('/siswa')->with('success','Data masuk!');
     }
 
@@ -47,7 +55,7 @@ class SiswaController extends Controller
     	$siswa = \App\Siswa::find($id);
     	$siswa->update($request->all());
         if ($request->hasFile('avatar')) {
-    $request->file('avatar')->move(public_path('images/'),$request->file('avatar')->getClientOriginalName());
+            $request->file('avatar')->move(public_path('images/'),$request->file('avatar')->getClientOriginalName());
             $siswa->avatar = $request->file('avatar')->getClientOriginalName();
             $siswa->save();
             

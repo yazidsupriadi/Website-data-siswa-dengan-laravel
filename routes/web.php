@@ -34,5 +34,6 @@ Route::get('/siswa/{id}/profile','SiswaController@profile');
 Route::group(['middleware' => ['auth','checkRole:admin,siswa']],function ()
 {
 	Route::get('/dashboard','DashboardController@index');
+	
 
 });

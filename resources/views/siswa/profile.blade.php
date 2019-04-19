@@ -21,7 +21,7 @@
 									<div class="profile-stat">
 										<div class="row">
 											<div class="col-md-4 stat-item">
-												45 <span>Projects</span>
+												{{$siswa->mapel->count()}}<span>Mata pelajaran</span>
 											</div>
 											<div class="col-md-4 stat-item">
 												15 <span>Awards</span>
@@ -59,7 +59,11 @@
 										<h4 class="heading">About</h4>
 										<p>Interactively fashion excellent information after distinctive outsourcing.</p>
 									</div>
-									<div class="text-center"><a href="/siswa/{{$siswa->id}}/edit" class="btn btn-primary">Edit Profile</a></div>
+									@if(auth()->user()->role == 'admin')
+
+									<div class="text-center"><a href="/siswa/{{$siswa->id}}/edit" class="btn btn-primary">Edit Profile</a>
+									</div>
+									@endif
 								</div>
 								<!-- END PROFILE DETAIL -->
 							</div>
@@ -70,7 +74,7 @@
 								<div class="custom-tabs-line tabs-line-bottom left-aligned">
 									<ul class="nav" role="tablist">
 										<li class="active"><a href="#tab-bottom-left1" role="tab" data-toggle="tab">Recent Activity</a></li>
-										<li><a href="#tab-bottom-left2" role="tab" data-toggle="tab">Projects <span class="badge">7</span></a></li>
+										<li><a href="#tab-bottom-left2" role="tab" data-toggle="tab">Kuliah </a></li>
 									</ul>
 								</div>
 								<div class="tab-content">
@@ -97,90 +101,31 @@
 									</div>
 									<div class="tab-pane fade" id="tab-bottom-left2">
 										<div class="table-responsive">
-											<table class="table project-table">
-												<thead>
-													<tr>
-														<th>Title</th>
-														<th>Progress</th>
-														<th>Leader</th>
-														<th>Status</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td><a href="#">Spot Media</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-																	<span>60% Complete</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user2.png" alt="Avatar" class="avatar img-circle"> <a href="#">Michael</a></td>
-														<td><span class="label label-success">ACTIVE</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">E-Commerce Site</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
-																	<span>33% Complete</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user1.png" alt="Avatar" class="avatar img-circle"> <a href="#">Antonius</a></td>
-														<td><span class="label label-warning">PENDING</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Project 123GO</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100" style="width: 68%;">
-																	<span>68% Complete</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user1.png" alt="Avatar" class="avatar img-circle"> <a href="#">Antonius</a></td>
-														<td><span class="label label-success">ACTIVE</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Wordpress Theme</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
-																	<span>75%</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user2.png" alt="Avatar" class="avatar img-circle"> <a href="#">Michael</a></td>
-														<td><span class="label label-success">ACTIVE</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Project 123GO</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																	<span>100%</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user1.png" alt="Avatar" class="avatar img-circle"> <a href="#">Antonius</a></td>
-														<td><span class="label label-default">CLOSED</span></td>
-													</tr>
-													<tr>
-														<td><a href="#">Redesign Landing Page</a></td>
-														<td>
-															<div class="progress">
-																<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-																	<span>100%</span>
-																</div>
-															</div>
-														</td>
-														<td><img src="assets/img/user5.png" alt="Avatar" class="avatar img-circle"> <a href="#">Jason</a></td>
-														<td><span class="label label-default">CLOSED</span></td>
-													</tr>
-												</tbody>
-											</table>
+											
+			<table class="table table-striped table-hover">
+				
+				<thead>
+					<tr>
+						<th>Kode</th>
+
+						<th>Mata pelajaran</th>
+						<th>Semester</th>
+						<th>Nilai</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($siswa->mapel as $mapel)
+										<tr>
+						<td><a href="/siswa/1/profile">{{$mapel->kode}}</a></td>
+
+						<td><a href="/siswa/1/profile">{{$mapel->nama}}</a></td>
+						<td>{{$mapel->semester}}</td>
+						<td>{{$mapel->pivot->nilai}}</td>
+					</tr>
+					@endforeach
+							
+									</tbody>
+			</table>	
 										</div>
 									</div>
 								</div>
