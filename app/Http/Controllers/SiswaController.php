@@ -23,7 +23,7 @@ class SiswaController extends Controller
     {	//insert siswa
         $this->validate($request,[
             'nama_depan' => 'min:5'
-        ]);
+        ]);//validasi form
         $user = new \App\User;
         $user->role = 'siswa';
         $user->name = $request->nama_depan;
@@ -35,11 +35,11 @@ class SiswaController extends Controller
         //insert siswa
         $request->request->add(["user_id" => $user->id]);
         $siswa = \App\Siswa::create($request->all());
-               if ($request->hasFile('avatar')) {
-            $request->file('avatar')->move(public_path('images/'),$request->file('avatar')->getClientOriginalName());
-            $siswa->avatar = $request->file('avatar')->getClientOriginalName();
-            $siswa->save();
-            
+       if ($request->hasFile('avatar')) {
+        $request->file('avatar')->move(public_path('images/'),$request->file('avatar')->getClientOriginalName());
+        $siswa->avatar = $request->file('avatar')->getClientOriginalName();
+        $siswa->save();
+        
         }       
     	return redirect('/siswa')->with('success','Data masuk!');
     }
@@ -71,11 +71,43 @@ class SiswaController extends Controller
     	return redirect('/siswa')->with('success','Data DiHapus!');
         	
     }
-    public  function profile($id)
+
+   public  function deletenilai($idsiswa,$idmapel)
+    {   
+        $siswa = \App\Siswa::find($idsiswa);
+        $siswa->mapel()->detach($idmapel);
+        return redirect()->back()->with('success','Data DiHapus!');
+            
+    }
+    public  function profile(Request $request,$id)
     {   
         $siswa = \App\Siswa::find($id);
-        return view('siswa.profile',['siswa' =>$siswa]);
+        $matapelajaran = \App\Mapel::all();
+
+        //menyiapkan data untuk chart
+        $categories = [];
+        $data = [];
+        foreach ($matapelajaran as $mp) {
+            if($siswa->mapel()->where('mapel_id',$request->mapel)->exists()){
+                     $categories[] = $mp->nama;
+            $data[] = $siswa->mapel()->wherePivot('mapel_id',$mp->id)->first()->pivot->nilai;
+       
+            }
+        }
+        return view('siswa.profile',['siswa' =>$siswa,'matapelajaran'=> $matapelajaran,'categories'=>$categories,'data'=>$data]);
                 
+    }
+    public function addnilai(Request $request,$idsiswa)
+    {
+        
+        $siswa = \App\Siswa::find($idsiswa);
+        if($siswa->mapel()->where('mapel_id',$request->mapel)->exists()){
+            return redirect('/siswa/'.$idsiswa.'/profile')->with('error','Data gagal Di tambahkan!');
+                
+        }
+        $siswa->mapel()->attach($request->mapel,['nilai'=>$request->nilai]);
+        return redirect('/siswa/'.$idsiswa.'/profile')->with('success','Data Di tambahkan!');
+              
     }
 
 

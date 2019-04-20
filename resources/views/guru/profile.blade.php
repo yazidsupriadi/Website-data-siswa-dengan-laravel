@@ -27,16 +27,15 @@
 								<div class="profile-header">
 									<div class="overlay"></div>
 									<div class="profile-main">
-										<img src="{{asset('images/'.$siswa->avatar)}}" width="80px" height="80px" class="img-circle" alt="Avatar">
-										<h3 class="name">{{$siswa->nama_depan}}</h3>
-											<span class="">{{$siswa->nama}}</span>
-									
+										<img src="" width="80px" height="80px" class="img-circle" alt="Avatar">
+										<h3 class="name">{{$guru->nama}}</h3>
+
 										<span class="online-status status-available">Available</span>
 									</div>
 									<div class="profile-stat">
 										<div class="row">
 											<div class="col-md-4 stat-item">
-												{{$siswa->mapel->count()}}<span>Mata pelajaran</span>
+												{{$guru->mapel->count()}}<span>Mata pelajaran</span>
 											</div>
 											<div class="col-md-4 stat-item">
 												15 <span>Awards</span>
@@ -53,12 +52,11 @@
 									<div class="profile-info">
 										<h4 class="heading">Basic Info</h4>
 										<ul class="list-unstyled list-justify">
-											<li>Jenis_kelamin <span>{{$siswa->nama}}</span></li>
+											<li>Nama<span>{{$guru->nama}}</span></li>
 											
-											<li>Jenis_kelamin <span>{{$siswa->jenis_kelamin}}</span></li>
-											<li>Agama<span>{{$siswa->agama}}</li>
-											<li>Email <span>{{Auth()->user()->email}}</span></li>
-											<li>Website <span><a href="https://www.themeineed.com">www.themeineed.com</a></span></li>
+											<li>telpon <span>{{$guru->telpon}}</span></li>
+											<li>Alamat<span>{{$guru->agama}}</li>
+											
 										</ul>
 									</div>
 									<div class="profile-info">
@@ -76,7 +74,7 @@
 									</div>
 									@if(auth()->user()->role == 'admin')
 
-									<div class="text-center"><a href="/siswa/{{$siswa->id}}/edit" class="btn btn-primary">Edit Profile</a>
+									<div class="text-center"><a href="/siswa/{{$guru->id}}/edit" class="btn btn-primary">Edit Profile</a>
 									</div>
 									@endif
 								</div>
@@ -131,21 +129,19 @@
 						<th>Mata pelajaran</th>
 						<th>Semester</th>
 						<th>Nilai</th>
-						<th>Guru</th>
 						<th>Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($siswa->mapel as $mapel)
+					@foreach($guru->mapel as $mapel)
 										<tr>
 						<td><a href="/siswa/1/profile">{{$mapel->kode}}</a></td>
 
 						<td><a href="/siswa/1/profile">{{$mapel->nama}}</a></td>
 						<td>{{$mapel->semester}}</td>
-						<td><a href="#" class="nilai" data-type="text" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Masukan nilai">{{$mapel->pivot->nilai}}</a>
-						</td>
+						
 						<td><a href="/siswa/{{$mapel->guru_id}}/profile">{{$mapel->guru->nama}}</a></td>
-						<td><a href="/siswa/{{$siswa->id}}/{{$mapel->id}}/deletenilai" class="btn btn-danger btn-sm" onclick="return confirm('Are u Sure..??')">Delete</a></td></td>
+						<td><a href="/siswa/{{$guru->id}}/{{$mapel->id}}/deletenilai" class="btn btn-danger btn-sm" onclick="return confirm('Are u Sure..??')">Delete</a></td></td>
 					</tr>
 					@endforeach
 							
@@ -166,97 +162,5 @@
 			</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Nilai</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        				      	
-					      <form action="/siswa/{{$siswa->id}}/addnilai" method="post" enctype="multipart/form-data">
-					      	{{csrf_field()}}
-				      	 <div class="form-group">
-						    <label for="emapel">Mata pelajaran</label>
-						    <select class="form-control" id="mapel" name="mapel">
-						      @foreach($matapelajaran as $mp)
-						      <option value="{{$mp->id}}">{{$mp->nama}}</option>
-						      @endforeach
-						    </select>
-						  </div>
-						  <div class="form-group{{$errors->has('nilai')?'has-error':''}}">
-						    <label for="exampleInputEmail1">Nilai</label>
-						    <input type="text" name='nilai' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai" value="{{old('nilai')}}">
-						    @if($errors->has('nilai'))
-						  		<span class="help-block">{{$errors->first('nilai')}}</span>  
-						    @endif
-						  </div>
-
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-						  <button type="submit" class="btn btn-primary">Submit</button>
-						</form>
-
-      </div>
-    </div>
-  </div>
 </div>
-@stop
-@section('footer')
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script>
-					
-						Highcharts.chart('chartNilai', {
-			    chart: {
-			        type: 'column'
-			    },
-			    title: {
-			        text: 'Laporan Nilai Siswa'
-			    },
-			    subtitle: {
-			        text: 'Source: WorldClimate.com'
-			    },
-			    xAxis: {
-			        categories: {!!json_encode($categories)!!},
-			        crosshair: true
-			    },
-			    yAxis: {
-			        min: 0,
-			        title: {
-			            text: 'Rainfall (mm)'
-			        }
-			    },
-			    tooltip: {
-			        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-			        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-			            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-			        footerFormat: '</table>',
-			        shared: true,
-			        useHTML: true
-			    },
-			    plotOptions: {
-			        column: {
-			            pointPadding: 0.2,
-			            borderWidth: 0
-			        }
-			    },
-			    series: [{
-			        name: 'Nilai',
-			        data: {!!json_encode($data)!!}
-
-			    }]
-			});
-
-		$(document).ready(function() {
-    $('.nilai').editable();
-});
-	</script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
 @stop
